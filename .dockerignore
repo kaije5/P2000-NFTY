@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# Kubernetes
+kubernetes/
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.*
+
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+p2000-forwarder
+
+# Test files
+*_test.go
+testdata/
+
+# CI/CD
+.github/
+
+# Temporary files
+*.tmp
+*.log

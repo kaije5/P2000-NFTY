@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: p2000-config
+  namespace: p2000-forwarder
+data:
+  config.yaml: |
+    forward_all: true
+    capcodes:
+      - ""
+    ntfy:
+      server: "http://ntfy:80"
+      topic: "p2000-alerts"
+      # token: ""

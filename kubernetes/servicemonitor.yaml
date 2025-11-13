@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: p2000-forwarder
+  namespace: p2000-forwarder
+  labels:
+    app: p2000-forwarder
+spec:
+  selector:
+    matchLabels:
+      app: p2000-forwarder
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+    scrapeTimeout: 10s

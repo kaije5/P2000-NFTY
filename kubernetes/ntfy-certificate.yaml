@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ntfy-tls-cert
+  namespace: istio-system  # Certificate must be in istio-system for Istio Gateway
+spec:
+  secretName: ntfy-tls-cert
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  dnsNames:
+  - ntfy.nrkdci.net
+  # Automatically renew 30 days before expiry
+  renewBefore: 720h  # 30 days

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: p2000-forwarder
+  namespace: p2000-forwarder
+  labels:
+    app: p2000-forwarder
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: p2000-forwarder

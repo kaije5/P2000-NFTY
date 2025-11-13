@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: ntfy-gateway
+  namespace: p2000-forwarder
+spec:
+  selector:
+    istio: ingressgateway  # Use default Istio ingress gateway
+  servers:
+  # HTTP server - redirect to HTTPS
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "ntfy.nrkdci.net"
+    tls:
+      httpsRedirect: true
+  # HTTPS server
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - "ntfy.nrkdci.net"
+    tls:
+      mode: SIMPLE
+      credentialName: ntfy-tls-cert  # Kubernetes secret created by cert-manager

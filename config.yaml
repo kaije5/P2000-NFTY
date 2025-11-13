@@ -1,0 +1,33 @@
+# P2000-NFTY Configuration
+
+# Forward all messages regardless of capcode (default: true)
+# Set to false to enable capcode filtering
+forward_all: true
+
+# List of capcodes to filter and forward
+# Only used when forward_all is false
+# Only messages containing these capcodes will be forwarded to ntfy
+capcodes:
+  - "300055"
+  - "120999"
+
+# Capcode translations - add human-readable descriptions for capcodes
+# Format: "capcode": "description"
+capcode_translations:
+  "": ""
+  # Add more translations as you discover capcodes
+
+# Path to capcode CSV file for automatic translation
+# The CSV should contain: capcode, agency, region, station, function
+capcode_csv_path: "capcodelijst.csv"
+
+# ntfy configuration
+ntfy:
+  # ntfy server URL (default: https://ntfy.sh)
+  server: "https://ntfy.sh"
+
+  # Topic name for notifications
+  topic: "P2000-all"
+
+  # Optional: Authentication token for private topics
+  # token: "your-token-here"
