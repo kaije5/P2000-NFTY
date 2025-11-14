@@ -14,23 +14,23 @@ import (
 )
 
 const (
-	maxRetries       = 3
-	retryBackoff     = 2 * time.Second
-	requestTimeout   = 10 * time.Second
-	defaultPriority  = "3" // Default ntfy priority (1=min, 5=max)
+	maxRetries      = 3
+	retryBackoff    = 2 * time.Second
+	requestTimeout  = 10 * time.Second
+	defaultPriority = "3" // Default ntfy priority (1=min, 5=max)
 )
 
 // Notifier sends notifications to ntfy.sh
 type Notifier struct {
-	server         string
-	topic          string
-	token          string
-	username       string
-	password       string
-	translations   map[string]string
-	capcodeLookup  *capcode.Lookup
-	httpClient     *http.Client
-	logger         zerolog.Logger
+	server        string
+	topic         string
+	token         string
+	username      string
+	password      string
+	translations  map[string]string
+	capcodeLookup *capcode.Lookup
+	httpClient    *http.Client
+	logger        zerolog.Logger
 }
 
 // NewNotifier creates a new ntfy notifier
@@ -135,16 +135,10 @@ func (n *Notifier) sendRequest(ctx context.Context, title, message, priority, ta
 // Format: 🚨 P2000 {CSV-Agency}
 func (n *Notifier) formatTitle(msg websocket.P2000Message) string {
 	// Try to get agency from first capcode if lookup is available
-	agency := msg.Agency
+	message := msg.Message
 
-	if n.capcodeLookup != nil && len(msg.Capcodes) > 0 {
-		if info := n.capcodeLookup.Get(msg.Capcodes[0]); info != nil {
-			agency = info.Agency
-		}
-	}
-
-	if agency != "" {
-		return fmt.Sprintf("🚨 P2000 %s", agency)
+	if message != "" {
+		return fmt.Sprintf("🚨 P2000 %s", message)
 	}
 
 	return "🚨 P2000"
@@ -153,10 +147,6 @@ func (n *Notifier) formatTitle(msg websocket.P2000Message) string {
 // formatMessage formats the notification message body with capcodes and translations
 func (n *Notifier) formatMessage(msg websocket.P2000Message) string {
 	var sb strings.Builder
-
-	// First: message text
-	sb.WriteString(msg.Message)
-	sb.WriteString("\n\n")
 
 	// Capcode details section
 	if len(msg.Capcodes) > 0 {
