@@ -20,9 +20,11 @@ type Config struct {
 
 // NtfyConfig holds ntfy.sh configuration
 type NtfyConfig struct {
-	Server string `yaml:"server"`
-	Topic  string `yaml:"topic"`
-	Token  string `yaml:"token"` // Optional authentication token
+	Server   string `yaml:"server"`
+	Topic    string `yaml:"topic"`
+	Token    string `yaml:"token"`    // Optional authentication token (Bearer)
+	Username string `yaml:"username"` // Optional username for Basic Auth
+	Password string `yaml:"password"` // Optional password for Basic Auth
 }
 
 // ServerConfig holds HTTP server configuration
@@ -74,6 +76,12 @@ func Load(configPath string) (*Config, error) {
 	}
 	if token := os.Getenv("NTFY_TOKEN"); token != "" {
 		cfg.Ntfy.Token = token
+	}
+	if username := os.Getenv("NTFY_USERNAME"); username != "" {
+		cfg.Ntfy.Username = username
+	}
+	if password := os.Getenv("NTFY_PASSWORD"); password != "" {
+		cfg.Ntfy.Password = password
 	}
 	if port := os.Getenv("SERVER_PORT"); port != "" {
 		if p, err := strconv.Atoi(port); err == nil {

@@ -92,6 +92,8 @@ func main() {
 		cfg.Ntfy.Server,
 		cfg.Ntfy.Topic,
 		cfg.Ntfy.Token,
+		cfg.Ntfy.Username,
+		cfg.Ntfy.Password,
 		cfg.CapcodeTranslations,
 		capcodeLookup,
 		logger,

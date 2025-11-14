@@ -19,9 +19,11 @@ spec:
         prometheus.io/port: "8080"
         prometheus.io/path: "/metrics"
     spec:
+      imagePullSecrets:
+      - name: ghcr-secret
       containers:
       - name: p2000-forwarder
-        image: ghcr.io/kaije/p2000-nfty:latest
+        image: ghcr.io/kaije5/p2000-nfty:latest
         imagePullPolicy: Always
         ports:
         - name: http
@@ -30,16 +32,16 @@ spec:
         env:
         - name: CONFIG_PATH
           value: /config/config.yaml
+        - name: NTFY_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: ntfy-token
+              key: token
         # Optional: Override config via environment variables
         # - name: NTFY_SERVER
         #   value: "https://ntfy.sh"
         # - name: NTFY_TOPIC
         #   value: "p2000-alerts"
-        # - name: NTFY_TOKEN
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: p2000-secrets
-        #       key: ntfy-token
         volumeMounts:
         - name: config
           mountPath: /config

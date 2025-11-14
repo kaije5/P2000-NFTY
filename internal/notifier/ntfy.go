@@ -25,6 +25,8 @@ type Notifier struct {
 	server         string
 	topic          string
 	token          string
+	username       string
+	password       string
 	translations   map[string]string
 	capcodeLookup  *capcode.Lookup
 	httpClient     *http.Client
@@ -32,11 +34,13 @@ type Notifier struct {
 }
 
 // NewNotifier creates a new ntfy notifier
-func NewNotifier(server, topic, token string, translations map[string]string, capcodeLookup *capcode.Lookup, logger zerolog.Logger) *Notifier {
+func NewNotifier(server, topic, token, username, password string, translations map[string]string, capcodeLookup *capcode.Lookup, logger zerolog.Logger) *Notifier {
 	return &Notifier{
 		server:        strings.TrimSuffix(server, "/"),
 		topic:         topic,
 		token:         token,
+		username:      username,
+		password:      password,
 		translations:  translations,
 		capcodeLookup: capcodeLookup,
 		httpClient: &http.Client{
@@ -105,7 +109,12 @@ func (n *Notifier) sendRequest(ctx context.Context, title, message, priority, ta
 	req.Header.Set("Priority", priority)
 	req.Header.Set("Tags", tags)
 
-	if n.token != "" {
+	// Set authentication: prefer Basic Auth if password is set, otherwise use Bearer token
+	if n.password != "" {
+		// Use Basic Authentication for password-protected topics
+		req.SetBasicAuth(n.username, n.password)
+	} else if n.token != "" {
+		// Use Bearer token for access token authentication
 		req.Header.Set("Authorization", "Bearer "+n.token)
 	}
 
