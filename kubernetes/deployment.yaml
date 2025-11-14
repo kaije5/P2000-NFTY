@@ -32,11 +32,16 @@ spec:
         env:
         - name: CONFIG_PATH
           value: /config/config.yaml
-        - name: NTFY_TOKEN
+        - name: NTFY_USERNAME
           valueFrom:
             secretKeyRef:
               name: ntfy-token
-              key: token
+              key: username
+        - name: NTFY_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ntfy-token
+              key: password
         # Optional: Override config via environment variables
         # - name: NTFY_SERVER
         #   value: "https://ntfy.sh"
