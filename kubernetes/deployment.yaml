@@ -23,7 +23,7 @@ spec:
       - name: ghcr-secret
       containers:
       - name: p2000-forwarder
-        image: ghcr.io/kaije5/p2000-nfty:latest
+        image: ghcr.io/kaije5/p2000-nfty:sha-29f9a90
         imagePullPolicy: Always
         ports:
         - name: http
@@ -32,16 +32,6 @@ spec:
         env:
         - name: CONFIG_PATH
           value: /config/config.yaml
-        - name: NTFY_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: ntfy-token
-              key: username
-        - name: NTFY_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: ntfy-token
-              key: password
         # Optional: Override config via environment variables
         # - name: NTFY_SERVER
         #   value: "https://ntfy.sh"
