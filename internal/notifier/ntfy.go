@@ -138,7 +138,7 @@ func (n *Notifier) formatTitle(msg websocket.P2000Message) string {
 	message := msg.Message
 
 	if message != "" {
-		return fmt.Sprintf("🚨 P2000 %s", message)
+		return fmt.Sprintf("🚨 %s", message)
 	}
 
 	return "🚨 P2000"
@@ -147,6 +147,17 @@ func (n *Notifier) formatTitle(msg websocket.P2000Message) string {
 // formatMessage formats the notification message body with capcodes and translations
 func (n *Notifier) formatMessage(msg websocket.P2000Message) string {
 	var sb strings.Builder
+
+	agency := "overig"
+
+	if n.capcodeLookup != nil && len(msg.Capcodes) > 0 {
+		if info := n.capcodeLookup.Get(msg.Capcodes[0]); info != nil {
+			agency = info.Agency
+		}
+	}
+
+	sb.WriteString(agency)
+	sb.WriteString("\n\n")
 
 	// Capcode details section
 	if len(msg.Capcodes) > 0 {
