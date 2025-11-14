@@ -171,25 +171,24 @@ func (n *Notifier) formatMessage(msg websocket.P2000Message) string {
 			// Try to get detailed info from CSV lookup
 			if n.capcodeLookup != nil {
 				if info := n.capcodeLookup.Get(capcode); info != nil {
-					sb.WriteString(fmt.Sprintf("Capcode: %s\n", capcode))
+					// Build the details string: capcode - regio, kazerne, functie
+					var details []string
 					if info.Region != "" {
-						sb.WriteString(fmt.Sprintf("Regio: %s\n", info.Region))
+						details = append(details, info.Region)
 					}
 					if info.Station != "" {
-						sb.WriteString(fmt.Sprintf("Kazerne: %s\n", info.Station))
+						details = append(details, info.Station)
 					}
 					if info.Function != "" {
-						sb.WriteString(fmt.Sprintf("Functie: %s\n", info.Function))
+						details = append(details, info.Function)
+					}
+					if len(details) > 0 {
+						sb.WriteString(fmt.Sprintf("%s - %s\n", capcode, strings.Join(details, ", ")))
+					} else {
+						sb.WriteString(fmt.Sprintf("%s\n", capcode))
 					}
 					continue
 				}
-			}
-
-			// Fallback: use old translation if available
-			if translation, ok := n.translations[capcode]; ok {
-				sb.WriteString(fmt.Sprintf("Capcode: %s - %s\n", capcode, translation))
-			} else {
-				sb.WriteString(fmt.Sprintf("Capcode: %s\n", capcode))
 			}
 		}
 	}

@@ -23,7 +23,7 @@ spec:
       - name: ghcr-secret
       containers:
       - name: p2000-forwarder
-        image: ghcr.io/kaije5/p2000-nfty:sha-29f9a90
+        image: ghcr.io/kaije5/p2000-nfty:sha-ada96ce
         imagePullPolicy: Always
         ports:
         - name: http
