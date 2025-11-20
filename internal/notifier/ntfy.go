@@ -157,12 +157,10 @@ func (n *Notifier) formatMessage(msg websocket.P2000Message) string {
 	}
 
 	sb.WriteString(agency)
-	sb.WriteString("\n\n")
+	sb.WriteString("\n")
 
 	// Capcode details section
 	if len(msg.Capcodes) > 0 {
-		sb.WriteString("Capcode Details:\n")
-
 		for i, capcode := range msg.Capcodes {
 			if i > 0 {
 				sb.WriteString("\n")
