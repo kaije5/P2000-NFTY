@@ -1,0 +1,4 @@
+forward_all: true
+ntfy:
+  server: "https://ntfy.sh"
+  topic: "all-alerts"

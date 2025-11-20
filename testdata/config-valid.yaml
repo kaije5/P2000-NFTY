@@ -1,0 +1,16 @@
+forward_all: false
+capcodes:
+  - "0101001"
+  - "0101002"
+  - "0234567"
+capcode_translations:
+  "0101001": "Brandweer Utrecht"
+  "0101002": "Ambulance Utrecht"
+  "0234567": "Politie Amsterdam"
+capcode_csv_path: "testdata/capcodes-test.csv"
+ntfy:
+  server: "https://ntfy.sh"
+  topic: "test-alerts"
+  token: "test-token-123"
+  username: "testuser"
+  password: "testpass"

@@ -1,0 +1,9 @@
+Capcode;Agency;Region;Station;Function
+0101001;Brandweer;Utrecht;Centrum;Kazernealarm
+0101002;Ambulance;Utrecht;Oost;A1 Dienst
+0101003;Ambulance;Utrecht;West;A2 Dienst
+0234567;Politie;Amsterdam;Centrum;Algemeen
+0234568;Politie;Amsterdam;Zuid;Surveillance
+0345678;KNRM;Rotterdam;Haven;Reddingsboot
+0456789;Brandweer;Den Haag;Scheveningen;Hoogwerker
+0567890;Ambulance;Groningen;Noord;B1 Dienst
